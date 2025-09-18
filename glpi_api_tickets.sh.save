@@ -1,0 +1,22 @@
+#!/bin/bash
+
+GLPI_API="http://10.0.2.15:8083/api"
+APP_TOKEN="TON_APP_TOKEN"
+USER="Super-Admin"
+PASS="VOTRE_MDP"
+
+# 1. Ouvre une session pour récupérer un user_token
+SESSION=$(curl -s -X POST \
+  -H 'Content-Type: application/json' \
+  -H "App-Token: $APP_TOKEN" \
+  -d "{\"login\":\"$USER\",\"password\":\"$PASS\"}" \
+  $GLPI_API/initSession)
+
+USER_TOKEN=$(echo $SESSION | jq -r '.session_token')
+
+# 2. Récupère le nombre de tickets ouverts
+TICKETS=$(curl -s -X GET \
+  -H 'Content-Type: application/json' \
+  -H "App-Token: $APP_TOKEN" \
+  -H "Session-Token: $USER_TOKEN" \
+  "$GLPI_A
