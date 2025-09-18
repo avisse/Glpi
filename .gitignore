@@ -1,0 +1,24 @@
+# Données persistantes / volumineuses
+glpi/
+storage/
+files/
+marketplace/
+plugins/
+
+# Secrets & env
+.env
+config/*secret*
+config/config_db.php
+
+# Dumps & backups
+*.sql
+*.sql.gz
+backups/
+*.tar
+*.tar.gz
+
+# Divers IDE
+.vscode/
+.idea/
+*.log
+*.pid

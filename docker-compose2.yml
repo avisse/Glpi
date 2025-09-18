@@ -1,0 +1,40 @@
+version: "3.8"
+
+services:
+  glpi:
+    image: glpi/glpi:latest
+    restart: unless-stopped
+    # Aucun volume monté ici pour éviter de casser l'installation de GLPI/app
+    env_file: .env
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "8083:80"  # Port local exposé sur ta machine
+    networks:
+      - glpinet
+
+  db:
+    image: mysql:5.7
+    restart: unless-stopped
+    volumes:
+      - ./storage/mysql:/var/lib/mysql
+    environment:
+      MYSQL_RANDOM_ROOT_PASSWORD: "yes"
+      MYSQL_DATABASE: ${GLPI_DB_NAME}
+      MYSQL_USER: ${GLPI_DB_USER}
+      MYSQL_PASSWORD: ${GLPI_DB_PASSWORD}
+    expose:
+      - "3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-u", "${GLPI_DB_USER}", "--password=${GLPI_DB_PASSWORD}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    networks:
+      - glpinet
+
+networks:
+  glpinet:
+    external: true
+
