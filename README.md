@@ -12,9 +12,8 @@ L’objectif est de fournir une solution portable, facilement réplicable, et en
 
 ```bash
 sudo apt update && sudo apt install docker.io docker-compose -y
-Arborescence du projet
-bash
-Copier le code
+
+##  Arborescence du projet
 projet-ecf/
 └── glpi/
     ├── docker-compose.yml
@@ -22,21 +21,18 @@ projet-ecf/
     └── storage/
         ├── glpi/
         └── mysql/
-Fichier .env
-Contient les variables d’environnement de la base de données :
 
-env
-Copier le code
+
+## Fichier .env
+Contient les variables d’environnement de la base de données :
 GLPI_DB_HOST=db
 GLPI_DB_PORT=3306
 GLPI_DB_NAME=glpi
 GLPI_DB_USER=glpi
 GLPI_DB_PASSWORD=glpi
-Fichier docker-compose.yml
-Définit les services GLPI et MySQL :
 
-yaml
-Copier le code
+## Fichier docker-compose.yml
+Définit les services GLPI et MySQL :
 version: "3.8"
 
 services:
@@ -68,28 +64,30 @@ services:
       interval: 5s
       timeout: 5s
       retries: 10
-Lancement du projet
+
+## Lancement du projet
+
 Démarrer les conteneurs :
 
-bash
-Copier le code
 docker-compose up -d
+
+
 Vérifier l’état :
 
-bash
-Copier le code
 docker ps
+
+
 Accéder à GLPI depuis un navigateur :
 http://localhost:8083
 
-Configuration initiale
+##Configuration initiale :
 Connexion avec l’utilisateur par défaut : glpi / glpi
 
 Création des entités, groupes, utilisateurs et profils
 
 Tests de création de tickets et gestion de matériels
 
-Plugin FusionInventory
+##Plugin FusionInventory
 FusionInventory est un plugin qui permet d’automatiser :
 
 L’inventaire matériel et logiciel des postes
@@ -99,6 +97,7 @@ La découverte réseau
 La remontée automatique d’informations dans GLPI
 
 Installation
+
 Télécharger le plugin depuis fusioninventory.org
 
 Décompresser dans le dossier plugins/ de GLPI
@@ -106,8 +105,7 @@ Décompresser dans le dossier plugins/ de GLPI
 Activer via l’interface GLPI (Configuration > Plugins)
 
 Installer des agents FusionInventory sur les postes clients
-
-Tests réalisés
+## Tests réalisés :
 Création et suivi de tickets
 
 Gestion d’utilisateurs et d’entités
@@ -115,14 +113,3 @@ Gestion d’utilisateurs et d’entités
 Vérification de la persistance après redémarrage des conteneurs
 
 Remontée d’informations via FusionInventory
-
-Supervision et sécurité
-Suivi des conteneurs avec docker logs et docker ps
-
-Vérification des ports réseau ouverts
-
-Préparation à une intégration future avec un pare-feu (projet complémentaire)
-
-Conclusion
-Le déploiement de GLPI via Docker sur Debian 12 permet d’obtenir une solution robuste et modulaire de gestion de parc informatique et de support utilisateur.
-L’ajout du plugin FusionInventory automatise l’inventaire et facilite l’administration d’une infrastructure complète.
